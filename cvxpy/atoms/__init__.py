@@ -74,4 +74,5 @@ from cvxpy.atoms.elementwise.pos import pos
 from cvxpy.atoms.elementwise.power import power
 from cvxpy.atoms.elementwise.scalene import scalene
 from cvxpy.atoms.elementwise.sqrt import sqrt
+from cvxpy.atoms.elementwise.sqrt2 import sqrt2
 from cvxpy.atoms.elementwise.square import square

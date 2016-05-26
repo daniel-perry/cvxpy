@@ -24,6 +24,7 @@ import numpy as np
 from cvxpy.utilities.power_tools import (is_power2, gm_constrs, pow_mid,
                                          pow_high, pow_neg)
 import scipy.sparse as sp
+from fractions import Fraction
 
 
 class power(Elementwise):
@@ -118,6 +119,10 @@ class power(Elementwise):
 
     """
     def __init__(self, x, p, max_denom=1024):
+        self.special = False
+        if p == 'special':
+          p = Fraction(1,2)
+          self.special = True
         p_old = p
 
         # how we convert p to a rational depends on the branch of the function
@@ -168,13 +173,13 @@ class power(Elementwise):
         """Is the atom convex?
         """
         # p == 0 is affine here.
-        return self.p <= 0 or self.p >= 1
+        return self.special or self.p <= 0 or self.p >= 1
 
     def is_atom_concave(self):
         """Is the atom concave?
         """
         # p == 0 is affine here.
-        return 0 <= self.p <= 1
+        return (not self.special) or 0 <= self.p <= 1
 
     def is_constant(self):
         """Is the expression constant?
